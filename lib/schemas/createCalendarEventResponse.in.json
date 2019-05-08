@@ -1,0 +1,121 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "example": {
+                "data": {
+                    "attributes": {
+                        "attendee": "5ac7e74679f6868274a42e28",
+                        "response_status": "accepted"
+                    },
+                    "relationships": {
+                        "calendar_event": {
+                            "data": {
+                                "id": "5755db2a3db4179179999acf",
+                                "type": "calendar_event"
+                            }
+                        },
+                        "user": {
+                            "data": {
+                                "id": "5a0c8e27a9d454cc150997f7",
+                                "type": "user"
+                            }
+                        }
+                    },
+                    "type": "calendar_event_response"
+                }
+            },
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "attendee": {
+                                            "description": "The attendee in the attendees list of the calendar event.",
+                                            "type": "object"
+                                        },
+                                        "response_status": {
+                                            "description": "The response status for the attendee.",
+                                            "enum": [
+                                                "accepted",
+                                                "declined",
+                                                "tentative"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            ],
+                            "required": [
+                                "attendee",
+                                "response_status"
+                            ]
+                        },
+                        "relationships": {
+                            "properties": {
+                                "calendar_event": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "type": "object"
+                                },
+                                "user": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "calendar_event_response"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "attributes",
+                        "relationships"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

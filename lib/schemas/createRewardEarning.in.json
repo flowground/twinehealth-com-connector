@@ -1,0 +1,141 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "earned_at": {
+                                    "description": "Date at which the reward was earned. (Must be after the reward was allocated and before the reward program activation was deactivated or expired)",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "earned_unit": {
+                                    "description": "Unit of the reward that has been earned. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "earned_value": {
+                                    "description": "Value of the reward that has been earned. (Must not exceed the allocated value for the reward)",
+                                    "type": "number"
+                                },
+                                "fulfilled_at": {
+                                    "description": "Date at which the reward earning was fulfilled. (Read-only property)",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "fulfilled_value": {
+                                    "description": "Value of the earned reward that has been fulfilled. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "number"
+                                },
+                                "ready_for_fulfillment": {
+                                    "description": "If true, the reward earning is ready to be fulfilled, either because the reward program activation was fulfill_as_earned or because the reward program activation has been deactivated. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "earned_value",
+                                "earned_at"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "group": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "patient": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "reward": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "reward_program_activation": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "reward"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

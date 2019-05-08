@@ -1,0 +1,43 @@
+{
+    "type": "object",
+    "properties": {
+        "include": {
+            "required": false,
+            "type": "string",
+            "enum": [
+                "patient"
+            ]
+        },
+        "filter_patient_": {
+            "type": "string"
+        },
+        "filter_groups_": {
+            "type": "string"
+        },
+        "filter_organization_": {
+            "type": "string"
+        },
+        "page_number_": {
+            "required": false,
+            "type": "integer",
+            "default": 1
+        },
+        "page_size_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 50
+        },
+        "page_limit_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "default": 50
+        },
+        "page_cursor_": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

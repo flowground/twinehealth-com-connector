@@ -1,0 +1,48 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_groups_": {
+            "type": "string"
+        },
+        "filter_organization_": {
+            "type": "string"
+        },
+        "filter_identifier__system_": {
+            "type": "string"
+        },
+        "filter_identifier__value_": {
+            "type": "string"
+        },
+        "filter_archived_": {
+            "type": "boolean"
+        },
+        "filter_created_at_": {
+            "type": "string"
+        },
+        "filter_updated_at_": {
+            "type": "string"
+        },
+        "page_number_": {
+            "required": false,
+            "type": "integer",
+            "default": 1
+        },
+        "page_size_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50,
+            "default": 10
+        },
+        "page_limit_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "default": 50
+        },
+        "page_cursor_": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

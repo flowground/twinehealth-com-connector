@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_patient_": {
+            "required": true,
+            "type": "string"
+        },
+        "filter_reward_program_activation_": {
+            "type": "string"
+        },
+        "filter_thread_": {
+            "type": "string"
+        }
+    }
+}

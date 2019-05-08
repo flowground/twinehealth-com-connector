@@ -1,0 +1,74 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "example": {
+                "data": {
+                    "attributes": {
+                        "name": "New Group"
+                    },
+                    "type": "group"
+                }
+            },
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "bio": {
+                                    "description": "A description of the group",
+                                    "example": "Team Health is all about the patient experience.",
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "description": "The name of the group",
+                                    "example": "Team Health",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "example": "57b36e3c04ad8c2224f2af38",
+                            "type": "string"
+                        },
+                        "links": {
+                            "properties": {
+                                "self": {
+                                    "example": "/group/57b36e3c04ad8c2224f2af38",
+                                    "pattern": "/group/[0-9a-z]+",
+                                    "type": "string"
+                                }
+                            },
+                            "readOnly": true,
+                            "required": [
+                                "self"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "group"
+                            ],
+                            "example": "group",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "type",
+                        "attributes"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

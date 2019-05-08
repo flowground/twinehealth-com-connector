@@ -1,0 +1,234 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "adherence": {
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "critical": {
+                                    "additionalProperties": true,
+                                    "type": "object"
+                                },
+                                "effective_from": {
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "time_zone": {
+                                    "type": "string"
+                                },
+                                "window_notification_times": {
+                                    "properties": {
+                                        "afternoon": {
+                                            "type": "integer"
+                                        },
+                                        "evening": {
+                                            "type": "integer"
+                                        },
+                                        "morning": {
+                                            "type": "integer"
+                                        },
+                                        "night": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "window_order": {
+                                    "items": {
+                                        "properties": {
+                                            "_actions": {
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "id": {
+                            "example": "57b36e3c04ad8c2224f2af38",
+                            "type": "string"
+                        },
+                        "links": {
+                            "properties": {
+                                "self": {
+                                    "example": "/patient_plan_summary/57b36e3c04ad8c2224f2af38",
+                                    "pattern": "/patient_plan_summary/[0-9a-z]+",
+                                    "type": "string"
+                                }
+                            },
+                            "readOnly": true,
+                            "required": [
+                                "self"
+                            ],
+                            "type": "object"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "actions": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "type",
+                                                    "id"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "related": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "bundles": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "type",
+                                                    "id"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "related": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "current_results": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "type",
+                                                    "id"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "related": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "patient": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "related": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "actions",
+                                "bundles",
+                                "patient"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "patient_plan_summary"
+                            ],
+                            "example": "patient_plan_summary",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

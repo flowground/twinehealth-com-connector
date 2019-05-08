@@ -1,0 +1,74 @@
+{
+    "type": "object",
+    "properties": {
+        "include": {
+            "required": false,
+            "type": "string",
+            "enum": [
+                "owner"
+            ]
+        },
+        "filter_patient_": {
+            "type": "string"
+        },
+        "filter_groups_": {
+            "type": "string"
+        },
+        "filter_organization_": {
+            "type": "string"
+        },
+        "filter_attendees_": {
+            "type": "string"
+        },
+        "filter_type_": {
+            "type": "string",
+            "enum": [
+                "plan-check-in",
+                "reminder",
+                "telephone-call",
+                "office-visit",
+                "video-call"
+            ]
+        },
+        "filter_completed_": {
+            "type": "boolean"
+        },
+        "filter_start_at_": {
+            "type": "string"
+        },
+        "filter_end_at_": {
+            "type": "string"
+        },
+        "filter_completed_at_": {
+            "type": "string"
+        },
+        "filter_created_at_": {
+            "type": "string"
+        },
+        "filter_updated_at_": {
+            "type": "string"
+        },
+        "page_number_": {
+            "required": false,
+            "type": "integer",
+            "default": 1
+        },
+        "page_size_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50,
+            "default": 10
+        },
+        "page_limit_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "default": 50
+        },
+        "page_cursor_": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

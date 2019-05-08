@@ -1,0 +1,120 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "budget_unit": {
+                                    "default": "dollar",
+                                    "description": "Unit of the budget for the reard program.",
+                                    "enum": [
+                                        "dollar",
+                                        "point",
+                                        "credit"
+                                    ],
+                                    "type": "string"
+                                },
+                                "budget_value": {
+                                    "description": "Value of the budget for the reward program. (Must be greater than 0)",
+                                    "type": "number"
+                                },
+                                "description": {
+                                    "description": "Description of the reward program - designed to be a comprehensive text description",
+                                    "type": "string"
+                                },
+                                "duration_active": {
+                                    "default": 540,
+                                    "description": "Number of days that a program can be active after it has been activated for a patient. (Must be greater than 0)",
+                                    "type": "number"
+                                },
+                                "end_at": {
+                                    "description": "Date at which the reward program ends. (Must be after the start_at)",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "frozen": {
+                                    "default": false,
+                                    "description": "If true, the reward program cannot be activated for a patient and new rewards cannot be created for the program.",
+                                    "type": "boolean"
+                                },
+                                "fulfill_as_earned": {
+                                    "default": false,
+                                    "description": "If true, the rewards created for a patient for the program can be fulfulled as they are earned. If false, the rewards should only be fulfilled when the program is deactivated.",
+                                    "type": "boolean"
+                                },
+                                "name": {
+                                    "description": "Name of the reward program",
+                                    "type": "string"
+                                },
+                                "start_at": {
+                                    "description": "Date at which the reward program starts.",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "tagline": {
+                                    "description": "Tagline of the reward program - designed to be one line",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "start_at",
+                                "end_at",
+                                "budget_value"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "group": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "group"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

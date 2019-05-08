@@ -1,0 +1,127 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "activated_at": {
+                                    "description": "Date at which the reward program was activated for the patient. (Must be between the start_at and end_at dates for the reward program)",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "active": {
+                                    "default": true,
+                                    "description": "If true, the reward program is currently active.",
+                                    "type": "boolean"
+                                },
+                                "allocated_count": {
+                                    "description": "Number of rewards allocated. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "number"
+                                },
+                                "budget_unit": {
+                                    "description": "Unit of the reward program budget. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "deactivated_at": {
+                                    "description": "Date at which the reward program was deactivated. (Must be after the activated_at date)",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "earned_count": {
+                                    "description": "Number of reward earnings. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "number"
+                                },
+                                "expires_at": {
+                                    "description": "Date at which the reward program activation expires. (Read-only property set by adding the days_active from the reward program to the activated_at date)",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "fulfill_as_earned": {
+                                    "description": "If true, the rewards created for a patient for the program can be fulfulled as they are earned. If false, the rewards should only be fulfilled when the program is deactivated. (Read-only property denormalized from the reward program)",
+                                    "readOnly": true,
+                                    "type": "boolean"
+                                },
+                                "total_allocated_value": {
+                                    "description": "Total value of reward allocated. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "number"
+                                },
+                                "total_earned_value": {
+                                    "description": "Total value of reward earnings. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "activated_at"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "patient": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "reward_program": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "patient",
+                                "reward_program"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

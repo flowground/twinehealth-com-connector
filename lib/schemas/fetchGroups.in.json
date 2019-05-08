@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_organization_": {
+            "required": true,
+            "type": "string"
+        },
+        "filter_name_": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

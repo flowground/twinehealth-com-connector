@@ -1,0 +1,91 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "fulfilled_at": {
+                                    "description": "Date at which the reward earning was fulfilled. (Must be at the same time or after the reward was earned)",
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "fulfilled_unit": {
+                                    "description": "Unit of the earned reward that has been fulfilled. (Read-only property)",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "fulfilled_value": {
+                                    "description": "Value of the earned reward that has been fulfilled. (Must be greater than or equal to 0)",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "fulfilled_value",
+                                "fulfilled_at"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "patient": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "reward_earning": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "reward_earning"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

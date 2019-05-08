@@ -1,0 +1,426 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "example": {
+                "data": {
+                    "attributes": {
+                        "first_name": "Jack",
+                        "last_name": "Frost"
+                    },
+                    "relationships": {
+                        "groups": {
+                            "data": [
+                                {
+                                    "id": "5755db2a3db4179179999acf",
+                                    "type": "group"
+                                }
+                            ]
+                        }
+                    },
+                    "type": "patient"
+                },
+                "meta": {
+                    "query": {
+                        "groups": [
+                            "5755db2a3db4179179999acf"
+                        ],
+                        "identifier": {
+                            "system": "OtherPlace",
+                            "value": "123456"
+                        }
+                    }
+                }
+            },
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "addresses": {
+                                    "items": {
+                                        "properties": {
+                                            "city": {
+                                                "example": "Cambridge",
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            },
+                                            "district": {
+                                                "type": "string"
+                                            },
+                                            "lines": {
+                                                "example": [
+                                                    "1234 Any St."
+                                                ],
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "postal_code": {
+                                                "example": "02138",
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "example": "MA",
+                                                "type": "string"
+                                            },
+                                            "text": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "use": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "archive_history": {
+                                    "items": {
+                                        "properties": {
+                                            "archived": {
+                                                "example": true,
+                                                "type": "boolean"
+                                            },
+                                            "modified_at": {
+                                                "example": "2016-06-03T13:15:22.000Z",
+                                                "format": "dateTime",
+                                                "type": "string"
+                                            },
+                                            "notes": {
+                                                "example": "Patient called requesting opt out of coaching",
+                                                "type": "string"
+                                            },
+                                            "reason": {
+                                                "example": "Opted out of coaching",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "archived": {
+                                    "example": true,
+                                    "readOnly": true,
+                                    "type": "boolean"
+                                },
+                                "birth_date": {
+                                    "example": "1944-03-06",
+                                    "format": "date",
+                                    "type": "string"
+                                },
+                                "email_address": {
+                                    "example": "fiona@example.com",
+                                    "type": "string"
+                                },
+                                "enrolled_at": {
+                                    "example": "2016-05-26T15:25:54.000Z",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "first_access_at": {
+                                    "example": "2016-06-03T13:15:22.000Z",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "first_name": {
+                                    "example": "Fiona",
+                                    "type": "string"
+                                },
+                                "gender": {
+                                    "enum": [
+                                        "male",
+                                        "female",
+                                        "other"
+                                    ],
+                                    "example": "female",
+                                    "type": "string"
+                                },
+                                "identifiers": {
+                                    "items": {
+                                        "properties": {
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "system": {
+                                                "type": "string"
+                                            },
+                                            "unique": {
+                                                "default": true,
+                                                "description": "If `true`, the combination of system and value must be global unique among all patients and coaches in Fitbit Plus.",
+                                                "type": "boolean"
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "system",
+                                            "value"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "invited_at": {
+                                    "example": "2016-06-01T16:20:16.000Z",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "last_access_at": {
+                                    "example": "2016-07-11T17:50:49.400Z",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "example": "Reeves",
+                                    "type": "string"
+                                },
+                                "note": {
+                                    "description": "Coach's note about the patient. Not visible to the patient.",
+                                    "example": "Relies on daughter to get around",
+                                    "type": "string"
+                                },
+                                "phone_numbers": {
+                                    "items": {
+                                        "properties": {
+                                            "primary": {
+                                                "example": true,
+                                                "type": "boolean"
+                                            },
+                                            "type": {
+                                                "enum": [
+                                                    "home",
+                                                    "work",
+                                                    "mobile",
+                                                    "home-fax",
+                                                    "work-fax",
+                                                    "other"
+                                                ],
+                                                "example": "mobile",
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "example": "555-555-1234",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "type",
+                                            "value",
+                                            "primary"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "statement": {
+                                    "description": "A patient's motivation statement.",
+                                    "properties": {
+                                        "updated_at": {
+                                            "example": "2016-06-03T13:15:22.000Z",
+                                            "format": "dateTime",
+                                            "type": "string"
+                                        },
+                                        "updated_by": {
+                                            "example": "5c509cc2f60e34018180b57c",
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "example": "Enjoying nature.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "updated_at": {
+                                    "example": "2016-07-11T17:13:57.027Z",
+                                    "format": "dateTime",
+                                    "readOnly": true,
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "id": {
+                            "example": "57b36ef304ad8c2224f2af3a",
+                            "type": "string"
+                        },
+                        "links": {
+                            "properties": {
+                                "self": {
+                                    "example": "/patient/57b36ef304ad8c2224f2af3a",
+                                    "pattern": "/patient/[0-9a-z]+",
+                                    "type": "string"
+                                },
+                                "twine_web_app": {
+                                    "description": "A link to the patient record in the Fitbit Plus web application.",
+                                    "example": "https://app.plus.fitbit.com/#/coach/patient/5367c6300b7bb6e94188c02c/overview",
+                                    "type": "string"
+                                }
+                            },
+                            "readOnly": true,
+                            "type": "object"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "coaches": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "example": "57fee2a66b49113551658505",
+                                                        "type": "string"
+                                                    },
+                                                    "meta": {
+                                                        "properties": {
+                                                            "primary": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "type": {
+                                                        "enum": [
+                                                            "coach"
+                                                        ],
+                                                        "example": "coach",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "type",
+                                                    "id"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "related": {
+                                                    "example": "/patient/57b36ef304ad8c2224f2af3a/groups",
+                                                    "pattern": "/patient/[0-9a-z]+/groups",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "readOnly": true,
+                                            "type": "object"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "type": "object"
+                                },
+                                "groups": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "example": "57b3708b04ad8c2224f2af3b",
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "enum": [
+                                                            "group"
+                                                        ],
+                                                        "example": "group",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "type"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "groups"
+                            ],
+                            "type": "object"
+                        },
+                        "type": {
+                            "enum": [
+                                "patient"
+                            ],
+                            "example": "patient",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "attributes"
+                    ],
+                    "type": "object"
+                },
+                "meta": {
+                    "properties": {
+                        "query": {
+                            "properties": {
+                                "groups": {
+                                    "description": "Group to create/update patient in.",
+                                    "items": {
+                                        "description": "ID of group",
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                "identifier": {
+                                    "description": "Identifier to match patient",
+                                    "properties": {
+                                        "system": {
+                                            "description": "Name of system",
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "description": "Value in system",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "identifier",
+                                "groups"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "query"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "meta",
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,1046 @@
+{
+    "title": "Fitbit Plus",
+    "description": "# Overview\nThe Fitbit Plus API is a RESTful API. The requests and responses are formated according to the\n[JSON API](http://jsonapi.org/format/1.0/) specification.\n\nIn addition to this documentation, we also provide an\n[OpenAPI](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md) \"yaml\" file describing the API:\n[Fitbit Plus API Specification](swagger.yaml).\n\n# Authentication\nAuthentication for the Fitbit Plus API is based on the\n[OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749). Fitbit Plus currently supports grant\ntypes of **client_credentials** and **refresh_token**.\n\nSee [POST /oauth/token](#operation/createToken) for details on the request and response formats.\n<!-- ReDoc-Inject: <security-definitions> -->\n\n## Building Integrations\nWe will provide customers with unique client credentials for each application/integration they build, allowing us\nto enforce appropriate access controls and monitor API usage.\nThe client credentials will be scoped to the organization, and allow full access to all patients and related data\nwithin that organization.\n\nThese credentials are appropriate for creating an integration that does one of the following:\n - background reporting/analysis\n - synchronizing data with another system (such as an EMR)\n\nThe API credentials and oauth flows we currently support are **not** well suited for creating a user-facing\napplication that allows a user (patient, coach, or admin) to login and have access to data which is appropriate to\nthat specific user. It is possible to build such an application, but it is not possible to use Fitbit Plus as a\nfederated identity provider. You would need to have a separate means of verifying a user's identity. We do not\ncurrently support the required password-based oauth flow to make this possible.\n\n# Paging\nThe Fitbit Plus API supports two different pagination strategies for GET collection endpoints.\n\n#### Skip-based paging\n\nSkip-based paging uses the query parameters `page[size]` and `page[number]` to specify the max number of resources returned and the page number. We default to skip-based paging if there are no page parameters. The response will include a `links` object containing links to the first, last, prev, and next pages of data.\n\nIf the contents of the collection change while you are iterating through the collection, you will see duplicate or missing documents. For example, if you are iterating through the `calender_event` resource via `GET /pub/calendar_event?sort=start_at&page[size]=50&page[number]=1`, and a new `calendar_event` is created that has a `start_at` value before the first `calendar_event`, when you fetch the next page at `GET /pub/calendar_event?sort=start_at&page[size]=50&page[number]=2`, the first entry in the second response will be a duplicate of the last entry in the first response.\n\n#### Cursor-based paging\nCursor-based paging uses the query parameters `page[limit]` and `page[after]` to specify the max number of entries returned and identify where to begin the next page. Add `page[limit]` to the parameters to use cursor-based paging. The response will include a `links` object containing a link to the next page of data, if the next page exists.\n\nCursor-based paging is not subject to duplication if new resources are added to the collection. For example, if you are iterating through the `calender_event` resource via `GET /pub/calendar_event?sort=start_at&page[limit]=50`, and a new `calendar_event` is created that has a `start_at` value before the first `calendar_event`, you will not see a duplicate entry when you fetch the next page at `GET /pub/calendar_event?sort=start_at&page[limit]=50&page[after]=<cursor>`.\n\nWe encourage the use of cursor-based paging for performance reasons.\n\nIn either form of paging, you can determine whether any resources were missed by comparing the number of fetched resources against `meta.count`. Set `page[size]` or `page[limit]` to 0 to get only the count.\n\nIt is not valid to mix the two strategies.\n",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/twinehealth.com/v7.78.1/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://api.twinehealth.com/pub",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "OAuth2": {
+                "label": "Fitbit Plus allows customers to access data for their organization using client credentials.\nOAuth2 is a safe and secure way to give you access.\n",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "token_uri": "/oauth/token"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "createAction": {
+            "main": "./lib/actions/createAction.js",
+            "title": "Create action",
+            "description": "Create a plan action",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createAction.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchAction": {
+            "main": "./lib/actions/fetchAction.js",
+            "title": "Get an action",
+            "description": "Get a health action from a patient's plan.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchAction.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updateAction": {
+            "main": "./lib/actions/updateAction.js",
+            "title": "Update an action",
+            "description": "Update a health action from a patient's plan.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateAction.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createBundle": {
+            "main": "./lib/actions/createBundle.js",
+            "title": "Create bundle",
+            "description": "Create a bundle in a patient's plan",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createBundle.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchBundle": {
+            "main": "./lib/actions/fetchBundle.js",
+            "title": "Get a bundle",
+            "description": "Get a bundle from a patient's plan.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchBundle.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updateBundle": {
+            "main": "./lib/actions/updateBundle.js",
+            "title": "Update a bundle",
+            "description": "Updte a bundle from a patient's plan.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateBundle.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchCalendarEvents": {
+            "main": "./lib/actions/fetchCalendarEvents.js",
+            "title": "List calendar events",
+            "description": "Get a list of calendar events",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchCalendarEvents.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createCalendarEvent": {
+            "main": "./lib/actions/createCalendarEvent.js",
+            "title": "Create calendar event",
+            "description": "Create a calendar event for a patient. Attribute `all_day` must be set to `true` and `end_at` cannot be set for `plan-check-in` event type.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createCalendarEvent.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "deleteCalendarEvent": {
+            "main": "./lib/actions/deleteCalendarEvent.js",
+            "title": "Delete a calendar event",
+            "description": "Delete a calendar event by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteCalendarEvent.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchCalendarEvent": {
+            "main": "./lib/actions/fetchCalendarEvent.js",
+            "title": "Get a calendar event",
+            "description": "Get a calendar event by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchCalendarEvent.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updateCalendarEvent": {
+            "main": "./lib/actions/updateCalendarEvent.js",
+            "title": "Update a calendar event",
+            "description": "Update a calendar event for a patient. Attribute `all_day` must be true and `end_at` cannot be specified for `plan-check-in` event type. To mark a calendar event as 'completed', set `completed_at` and `completed_by` to desired values.  To mark a completed calendar event as 'not completed', set `completed_at` and `completed_by` to `null`. Attendees can be added or removed, but response status cannot be updated. Use the calendar event response api for response status updates instead.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateCalendarEvent.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createCalendarEventResponse": {
+            "main": "./lib/actions/createCalendarEventResponse.js",
+            "title": "Create calendar event response",
+            "description": "Create a calendar event response for an attendee of a calendar event, the attendee can be a coach or patient.  Calendar event responses cannot be fetched, updated nor deleted.  Use calendar event api to fetch the response status for attendees.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createCalendarEventResponse.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchCoach": {
+            "main": "./lib/actions/fetchCoach.js",
+            "title": "Get a coach",
+            "description": "Get a coach record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchCoach.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchEmailHistories": {
+            "main": "./lib/actions/fetchEmailHistories.js",
+            "title": "List email histories",
+            "description": "Get a list of email histories",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchEmailHistories.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchEmailHistory": {
+            "main": "./lib/actions/fetchEmailHistory.js",
+            "title": "Get an email history",
+            "description": "Get an email history by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchEmailHistory.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchGroups": {
+            "main": "./lib/actions/fetchGroups.js",
+            "title": "List groups",
+            "description": "Get a list of groups matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchGroups.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createGroup": {
+            "main": "./lib/actions/createGroup.js",
+            "title": "Create a group",
+            "description": "Create a group record.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createGroup.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchGroup": {
+            "main": "./lib/actions/fetchGroup.js",
+            "title": "Get a group",
+            "description": "Get a group record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchGroup.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthProfiles": {
+            "main": "./lib/actions/fetchHealthProfiles.js",
+            "title": "List health profiles",
+            "description": "Get a list of health profiles",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthProfiles.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthProfile": {
+            "main": "./lib/actions/fetchHealthProfile.js",
+            "title": "Get a health profile",
+            "description": "Get a health profile by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthProfile.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthProfileAnswers": {
+            "main": "./lib/actions/fetchHealthProfileAnswers.js",
+            "title": "List health profile answers",
+            "description": "Get a list of health profile answers",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthProfileAnswers.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthProfileAnswer": {
+            "main": "./lib/actions/fetchHealthProfileAnswer.js",
+            "title": "Get a health profile answer",
+            "description": "Get a health profile answer by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthProfileAnswer.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthProfileQuestion": {
+            "main": "./lib/actions/fetchHealthProfileQuestion.js",
+            "title": "Get a health profile question",
+            "description": "Get a health profile by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthProfileQuestion.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthQuestionDefinitions": {
+            "main": "./lib/actions/fetchHealthQuestionDefinitions.js",
+            "title": "List health question definitions",
+            "description": "Get a list of all health question definitions",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthQuestionDefinitions.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchHealthQuestionDefinition": {
+            "main": "./lib/actions/fetchHealthQuestionDefinition.js",
+            "title": "Get a health question definition",
+            "description": "Get a health question definition by id",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchHealthQuestionDefinition.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createToken": {
+            "main": "./lib/actions/createToken.js",
+            "title": "Create an oauth token",
+            "description": "Create an OAuth 2.0 Bearer token. A valid bearer token is required for all other API requests.\n\nBe sure to set the header `Content-Type: \"application/vnd.api+json\"`. Otherwise, you will get an error\n403 Forbidden. Using `Content-Type: \"application/json\"` is permitted (to support older oauth clients) but when\nusing `application/json` the body should have a body in the following format instead of nesting under\n`data.attributes`:\n```\n{\n  \"grant_type\": \"client_credentials\",\n  \"client_id\": \"95c78ab2-167f-40b8-8bec-8398d4b87454\",\n  \"client_secret\": \"35d18dc9-a3dd-4948-b787-063a490b9354\"\n}\n```\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                },
+                "body_content_type": {
+                    "viewClass": "SelectView",
+                    "label": "Body Content-Type",
+                    "required": true,
+                    "prompt": "Choose a body Content-Type.",
+                    "model": {
+                        "application/vnd.api+json": "application/vnd.api+json",
+                        "application/json": "application/json"
+                    }
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createToken.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchTokenGroups": {
+            "main": "./lib/actions/fetchTokenGroups.js",
+            "title": "Get the groups for a token",
+            "description": "Get the list of groups a token can be used to access.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchTokenGroups.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchTokenOrganization": {
+            "main": "./lib/actions/fetchTokenOrganization.js",
+            "title": "Get the organization for a token",
+            "description": "Get the organization a token can be used to access.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchTokenOrganization.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchOrganization": {
+            "main": "./lib/actions/fetchOrganization.js",
+            "title": "Get an organization",
+            "description": "Get an organization record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchOrganization.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatients": {
+            "main": "./lib/actions/fetchPatients.js",
+            "title": "List patients",
+            "description": "Get a list of patients.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatients.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createPatient": {
+            "main": "./lib/actions/createPatient.js",
+            "title": "Create a patient",
+            "description": "Create a patient record.\n\nExample for creating a patient with a group specified using `meta.query` instead of `id`:\n\n```JSON\n{\n  \"data\": {\n    \"type\": \"patient\",\n    \"attributes\": {\n      \"first_name\": \"Andrew\",\n      \"last_name\": \"Smith\"\n    },\n    \"relationships\": {\n      \"groups\": {\n        \"data\": [\n          {\n            \"type\": \"group\",\n            \"meta\": {\n              \"query\": {\n                \"organization\": \"58c88de7c93eb96357a87033\",\n                \"name\": \"Patients Lead\"\n              }\n            }\n          }\n        ]\n      }\n    }\n  }\n}\n```\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createPatient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "upsertPatient": {
+            "main": "./lib/actions/upsertPatient.js",
+            "title": "Upsert patient",
+            "description": "Create a new patient or update an existing patient",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/upsertPatient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatient": {
+            "main": "./lib/actions/fetchPatient.js",
+            "title": "Get a patient",
+            "description": "Gets a patient record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updatePatient": {
+            "main": "./lib/actions/updatePatient.js",
+            "title": "Update a patient",
+            "description": "Update a patient record.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updatePatient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientCoaches": {
+            "main": "./lib/actions/fetchPatientCoaches.js",
+            "title": "List coaches for a patient",
+            "description": "Get the list of coaches for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientCoaches.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientGroups": {
+            "main": "./lib/actions/fetchPatientGroups.js",
+            "title": "List groups for a patient",
+            "description": "Get the list of groups for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientGroups.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientHealthMetrics": {
+            "main": "./lib/actions/fetchPatientHealthMetrics.js",
+            "title": "List patient health metrics",
+            "description": "Get a list of patient health metrics.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientHealthMetrics.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createPatientHealthMetric": {
+            "main": "./lib/actions/createPatientHealthMetric.js",
+            "title": "Create patient health metrics",
+            "description": "Create one or more patient health metrics.\n\nExample for creating a patient health result with a patient specified using `meta.query` instead of `id`:\n\n```JSON\n  {\n    \"data\": {\n      \"type\": \"patient_health_metric\",\n       \"attributes\": {\n         \"code\": {\n           \"system\": \"LOINC\",\n           \"value\": \"13457-7\"\n         },\n         \"type\": \"ldl_cholesterol\",\n         \"occurred_at\": \"2017-03-14T11:00:57.000Z\",\n         \"value\": 121,\n         \"unit\": \"mg/dl\"\n      },\n      \"relationships\": {\n        \"patient\": {\n          \"data\": {\n            \"type\": \"patient\",\n            \"meta\": {\n              \"query\": {\n                \"identifier\": {\n                  \"system\": \"medical-record-number\",\n                  \"value\": \"121212\"\n                },\n                \"organization\": \"58c4554710123c5c40dbab81\"\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n```\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createPatientHealthMetric.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientHealthMetric": {
+            "main": "./lib/actions/fetchPatientHealthMetric.js",
+            "title": "Get a patient health metric",
+            "description": "Get the plan summary for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientHealthMetric.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientPlanSummaries": {
+            "main": "./lib/actions/fetchPatientPlanSummaries.js",
+            "title": "List patient plan summaries",
+            "description": "Get a list of patient plan summaries",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientPlanSummaries.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchPatientPlanSummary": {
+            "main": "./lib/actions/fetchPatientPlanSummary.js",
+            "title": "Get the plan summary for a patient",
+            "description": "Get the plan summary for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchPatientPlanSummary.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updatePatientPlanSummary": {
+            "main": "./lib/actions/updatePatientPlanSummary.js",
+            "title": "Update a plan summary",
+            "description": "Update a plan summary record for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updatePatientPlanSummary.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewards": {
+            "main": "./lib/actions/fetchRewards.js",
+            "title": "List rewards",
+            "description": "Get a list of rewards matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewards.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createReward": {
+            "main": "./lib/actions/createReward.js",
+            "title": "Create a reward",
+            "description": "Create a reward for a patient.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createReward.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchReward": {
+            "main": "./lib/actions/fetchReward.js",
+            "title": "Get a reward",
+            "description": "Get a reward record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchReward.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardEarnings": {
+            "main": "./lib/actions/fetchRewardEarnings.js",
+            "title": "List reward earnings",
+            "description": "Get a list of reward earnings matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardEarnings.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createRewardEarning": {
+            "main": "./lib/actions/createRewardEarning.js",
+            "title": "Create a reward earning",
+            "description": "Create a reward earning for a reward. There can only be one earning for a reward. It is possilble to create multiple reward earnings simultaneously by providing and array of reward earnings in the data property.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createRewardEarning.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardEarning": {
+            "main": "./lib/actions/fetchRewardEarning.js",
+            "title": "Get a reward earning",
+            "description": "Get a reward earning record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardEarning.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardEarningFulfillments": {
+            "main": "./lib/actions/fetchRewardEarningFulfillments.js",
+            "title": "List reward earning fulfillments",
+            "description": "Get a list of reward earning fulfillments matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardEarningFulfillments.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createRewardEarningFulfillment": {
+            "main": "./lib/actions/createRewardEarningFulfillment.js",
+            "title": "Create a reward earning fulfillment",
+            "description": "Create a reward earning fulfillment for a reward earning. There can only be one fulfillment for each earning.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createRewardEarningFulfillment.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardEarningFulfillment": {
+            "main": "./lib/actions/fetchRewardEarningFulfillment.js",
+            "title": "Get a reward earning fulfillment",
+            "description": "Get a reward earning fulfillment record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardEarningFulfillment.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardPrograms": {
+            "main": "./lib/actions/fetchRewardPrograms.js",
+            "title": "List reward programs",
+            "description": "Get a list of reward programs matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardPrograms.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createRewardProgram": {
+            "main": "./lib/actions/createRewardProgram.js",
+            "title": "Create a reward program",
+            "description": "Create a reward program for a group.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createRewardProgram.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardProgram": {
+            "main": "./lib/actions/fetchRewardProgram.js",
+            "title": "Get a reward program",
+            "description": "Get a reward program record by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardProgram.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardProgramGroup": {
+            "main": "./lib/actions/fetchRewardProgramGroup.js",
+            "title": "Get group for a reward program",
+            "description": "Get the group related to a reward program.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardProgramGroup.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardProgramActivations": {
+            "main": "./lib/actions/fetchRewardProgramActivations.js",
+            "title": "List reward program activations",
+            "description": "Get a list of reward program activations matching the specified filters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardProgramActivations.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createRewardProgramActivation": {
+            "main": "./lib/actions/createRewardProgramActivation.js",
+            "title": "Create a reward program activation",
+            "description": "Create a reward program activation for a patient. There can only be one activation for a patient for a given reward program.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createRewardProgramActivation.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "fetchRewardProgramActivation": {
+            "main": "./lib/actions/fetchRewardProgramActivation.js",
+            "title": "Get a reward program activation",
+            "description": "Get a reward program activationrecord by id.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/fetchRewardProgramActivation.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

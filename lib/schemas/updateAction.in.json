@@ -1,0 +1,240 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "properties": {
+                        "attributes": {
+                            "properties": {
+                                "_thread": {
+                                    "type": "string"
+                                },
+                                "adherence": {
+                                    "properties": {
+                                        "complete": {
+                                            "type": "integer"
+                                        },
+                                        "due": {
+                                            "type": "integer"
+                                        },
+                                        "streak": {
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer"
+                                                },
+                                                "updated_at": {
+                                                    "format": "dateTime",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "readOnly": true,
+                                    "type": "object"
+                                },
+                                "details": {
+                                    "additionalProperties": true,
+                                    "type": "object"
+                                },
+                                "effective_from": {
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "effective_to": {
+                                    "format": "dateTime",
+                                    "type": "string"
+                                },
+                                "frequency_goal": {
+                                    "properties": {
+                                        "weeks": {
+                                            "properties": {
+                                                "days": {
+                                                    "items": {
+                                                        "description": "Days of week that the action is scheduled for. Zero-indexed, ex 0 represents Sunday, etc.",
+                                                        "enum": [
+                                                            0,
+                                                            1,
+                                                            2,
+                                                            3,
+                                                            4,
+                                                            5,
+                                                            6
+                                                        ],
+                                                        "maxItems": 7,
+                                                        "type": "integer"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "identifiers": {
+                                    "items": {
+                                        "properties": {
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "system": {
+                                                "type": "string"
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "system",
+                                            "value"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "intake": {
+                                    "additionalProperties": true,
+                                    "type": "object"
+                                },
+                                "metric_required": {
+                                    "type": "boolean"
+                                },
+                                "metrics": {
+                                    "items": {
+                                        "properties": {
+                                            "goal": {
+                                                "type": "object"
+                                            },
+                                            "metric_type": {
+                                                "type": "string"
+                                            },
+                                            "unit": {
+                                                "type": "string"
+                                            },
+                                            "validations": {
+                                                "properties": {
+                                                    "maximum": {
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "minimum": {
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "static_title": {
+                                    "readOnly": true,
+                                    "type": "string"
+                                },
+                                "title": {
+                                    "type": "string"
+                                },
+                                "tracking": {
+                                    "type": "boolean"
+                                },
+                                "type": {
+                                    "enum": [
+                                        "other_lifestyle"
+                                    ],
+                                    "type": "string"
+                                },
+                                "windows": {
+                                    "items": {
+                                        "properties": {
+                                            "_id": {
+                                                "type": "string"
+                                            },
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "type"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "title",
+                                "effective_from"
+                            ],
+                            "type": "object"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "relationships": {
+                            "properties": {
+                                "plan": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

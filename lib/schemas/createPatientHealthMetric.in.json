@@ -1,0 +1,219 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "properties": {
+                "data": {
+                    "allOf": [
+                        {
+                            "example": {
+                                "data": {
+                                    "attributes": {
+                                        "code": {
+                                            "system": "LOINC",
+                                            "value": "13457-7"
+                                        },
+                                        "occurred_at": "2017-03-14T11:00:57.000Z",
+                                        "type": "ldl_cholesterol",
+                                        "unit": "mg/dl",
+                                        "value": 121
+                                    },
+                                    "relationships": {
+                                        "patient": {
+                                            "data": {
+                                                "id": "",
+                                                "type": "patient"
+                                            }
+                                        }
+                                    },
+                                    "type": "patient_health_metric"
+                                }
+                            },
+                            "properties": {
+                                "attributes": {
+                                    "properties": {
+                                        "code": {
+                                            "properties": {
+                                                "system": {
+                                                    "type": "string"
+                                                },
+                                                "value": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "system",
+                                                "value"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "diastolic": {
+                                            "type": "number"
+                                        },
+                                        "occurred_at": {
+                                            "format": "dateTime",
+                                            "type": "string"
+                                        },
+                                        "systolic": {
+                                            "type": "number"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "blood_pressure_systolic",
+                                                "blood_pressure_diastolic",
+                                                "hemoglobin_a1c",
+                                                "hdl_cholesterol",
+                                                "ldl_cholesterol",
+                                                "total_cholesterol",
+                                                "triglycerides",
+                                                "blood_urea_nitrogen",
+                                                "creatinine",
+                                                "hemoglobin",
+                                                "hematocrit",
+                                                "total_serum_iron",
+                                                "thyroid_stimulating_hormone",
+                                                "free_thyroxine",
+                                                "free_triiodothyronine",
+                                                "total_triiodothyronine",
+                                                "cd4_cell_count",
+                                                "hiv_viral_load",
+                                                "inr",
+                                                "free_testosterone",
+                                                "total_testosterone",
+                                                "c_reactive_protein",
+                                                "prostate_specific_antigen",
+                                                "cotinine",
+                                                "c_peptide",
+                                                "blood_pressure",
+                                                "blood_glucose",
+                                                "weight",
+                                                "heart_rate",
+                                                "body_fat_percentage",
+                                                "body_mass_index",
+                                                "body_temperature",
+                                                "forced_expiratory_volume1",
+                                                "forced_vital_capacity",
+                                                "lean_body_mass",
+                                                "nausea_level",
+                                                "oxygen_saturation",
+                                                "pain_level",
+                                                "peak_expiratory_flow_rate",
+                                                "peripheral_perfusion_index",
+                                                "respiratory_rate",
+                                                "inhaler_usage"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "unit": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "description": "Can be any value (number, boolean, string, object) depending on the metric type. Most values are of type number."
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "relationships": {
+                                    "properties": {
+                                        "patient": {
+                                            "properties": {
+                                                "data": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Required if the `meta.query` is not defined.",
+                                                            "example": "5817ead56f5316c0d05ba8bf",
+                                                            "type": "string"
+                                                        },
+                                                        "meta": {
+                                                            "description": "Allows the specification of a query for a patient rather than providing a patient id directly",
+                                                            "properties": {
+                                                                "query": {
+                                                                    "description": "The query must return one and only one patient.",
+                                                                    "properties": {
+                                                                        "groups": {
+                                                                            "items": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        "identifier": {
+                                                                            "properties": {
+                                                                                "system": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "value": {
+                                                                                    "type": "string"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "system",
+                                                                                "value"
+                                                                            ],
+                                                                            "type": "object"
+                                                                        },
+                                                                        "organization": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "identifier"
+                                                                    ],
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "query"
+                                                            ],
+                                                            "type": "object"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "links": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "id"
+                            ],
+                            "type": "object"
+                        },
+                        {
+                            "description": "Note that `data` can either be a single object or an array of objects matching the schema specified here\n(bulk create).\n"
+                        }
+                    ],
+                    "type": "object"
+                },
+                "meta": {
+                    "properties": {
+                        "ignore_duplicates": {
+                            "description": "If `true`, the patient health metric will be ignored if there is an existing patient health metric for\nthe same patient, with the same `type` and same `occurred_at`.\n",
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "data"
+            ],
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "required": true,
+            "type": "string"
+        },
+        "include": {
+            "required": false,
+            "type": "string",
+            "enum": [
+                "patient",
+                "questions"
+            ]
+        }
+    }
+}

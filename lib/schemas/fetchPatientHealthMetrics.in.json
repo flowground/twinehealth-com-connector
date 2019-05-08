@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_patient_": {
+            "required": true,
+            "type": "string"
+        },
+        "page_number_": {
+            "required": false,
+            "type": "integer",
+            "default": 1
+        },
+        "page_size_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50,
+            "default": 10
+        },
+        "page_limit_": {
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "default": 50
+        },
+        "page_cursor_": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

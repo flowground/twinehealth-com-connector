@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "include": {
+            "required": false,
+            "type": "string",
+            "enum": [
+                "actions",
+                "bundles",
+                "patient",
+                "current_results"
+            ]
+        },
+        "filter_patient_": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

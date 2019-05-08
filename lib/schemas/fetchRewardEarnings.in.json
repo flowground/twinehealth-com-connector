@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_groups_": {
+            "required": true,
+            "type": "string"
+        },
+        "filter_patient_": {
+            "required": true,
+            "type": "string"
+        },
+        "filter_ready_for_fulfillment_": {
+            "type": "boolean"
+        }
+    }
+}

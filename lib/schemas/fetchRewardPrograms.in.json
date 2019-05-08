@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "filter_groups_": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

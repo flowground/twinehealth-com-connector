@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "sort": {
+            "type": "string",
+            "enum": [
+                "send_time",
+                "-send_time"
+            ]
+        },
+        "filter_receiver_": {
+            "type": "string"
+        },
+        "filter_sender_": {
+            "type": "string"
+        },
+        "filter_emailType_": {
+            "type": "string"
+        }
+    }
+}
